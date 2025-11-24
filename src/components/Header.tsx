@@ -16,6 +16,7 @@ export const Header: React.FC<Props> = ({ onAddTodo, onError }) => {
 
     if (!trimmedTitle) {
       onError('Title should not be empty');
+
       return;
     }
 
@@ -41,7 +42,7 @@ export const Header: React.FC<Props> = ({ onAddTodo, onError }) => {
           className="new-todo"
           placeholder="What needs to be done?"
           value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          onChange={e => setTitle(e.target.value)}
           disabled={isLoading}
         />
       </form>

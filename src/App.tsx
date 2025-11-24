@@ -34,6 +34,7 @@ export const App: React.FC = () => {
 
     try {
       const newTodo = await createTodo(title);
+
       setTodos(currentTodos => [...currentTodos, newTodo]);
     } catch {
       setError('Unable to add a todo');
@@ -64,6 +65,7 @@ export const App: React.FC = () => {
       const updatedTodo = await updateTodo(todo.id, {
         completed: !todo.completed,
       });
+
       setTodos(currentTodos =>
         currentTodos.map(currentTodo =>
           currentTodo.id === todo.id ? updatedTodo : currentTodo,
@@ -73,7 +75,9 @@ export const App: React.FC = () => {
       setError('Unable to update a todo');
       throw new Error('Unable to update a todo');
     } finally {
-      setLoadingIds(current => current.filter(loadingId => loadingId !== todo.id));
+      setLoadingIds(current =>
+        current.filter(loadingId => loadingId !== todo.id),
+      );
     }
   };
 
@@ -83,6 +87,7 @@ export const App: React.FC = () => {
 
     try {
       const updatedTodo = await updateTodo(todo.id, { title });
+
       setTodos(currentTodos =>
         currentTodos.map(currentTodo =>
           currentTodo.id === todo.id ? updatedTodo : currentTodo,
@@ -92,7 +97,9 @@ export const App: React.FC = () => {
       setError('Unable to update a todo');
       throw new Error('Unable to update a todo');
     } finally {
-      setLoadingIds(current => current.filter(loadingId => loadingId !== todo.id));
+      setLoadingIds(current =>
+        current.filter(loadingId => loadingId !== todo.id),
+      );
     }
   };
 
@@ -107,6 +114,7 @@ export const App: React.FC = () => {
         if (todo.completed === areAllCompleted) {
           return updateTodo(todo.id, { completed: !areAllCompleted });
         }
+
         return Promise.resolve(todo);
       });
 
@@ -129,10 +137,9 @@ export const App: React.FC = () => {
 
     try {
       const promises = completedTodos.map(todo => deleteTodo(todo.id));
+
       await Promise.all(promises);
-      setTodos(currentTodos =>
-        currentTodos.filter(todo => !todo.completed),
-      );
+      setTodos(currentTodos => currentTodos.filter(todo => !todo.completed));
     } catch {
       setError('Unable to delete a todo');
       throw new Error('Unable to delete a todo');
@@ -149,9 +156,10 @@ export const App: React.FC = () => {
     () => todos.filter(todo => todo.completed).length,
     [todos],
   );
-  const allCompleted = useMemo(() => todos.every(todo => todo.completed), [
-    todos,
-  ]);
+  const allCompleted = useMemo(
+    () => todos.every(todo => todo.completed),
+    [todos],
+  );
 
   const filteredTodos = useMemo(() => {
     return todos.filter(todo => {
@@ -201,4 +209,3 @@ export const App: React.FC = () => {
     </div>
   );
 };
-

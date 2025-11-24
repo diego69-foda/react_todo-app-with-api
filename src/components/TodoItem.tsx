@@ -47,12 +47,14 @@ export const TodoItem: React.FC<Props> = ({
 
     if (trimmedTitle === title) {
       setIsEditing(false);
+
       return;
     }
 
     if (!trimmedTitle) {
       onDelete(id);
       setIsEditing(false);
+
       return;
     }
 
